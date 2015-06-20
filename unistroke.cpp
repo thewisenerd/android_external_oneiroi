@@ -40,9 +40,53 @@ Unistroke get_unistroke(std::string name, std::vector<Point>& points)
 void init_unistrokes(void)
 {
 #include <gestures.h>
-	std::vector<Point> circle(begin(circle_arr), end(circle_arr));
-	Unistrokes.push_back(get_unistroke("circle", circle));
+
+	std::vector<Point> triangle(begin(triangle_arr), end(triangle_arr));
+	Unistrokes.push_back(get_unistroke("triangle", triangle));
+
+	std::vector<Point> x(begin(x_arr), end(x_arr));
+	Unistrokes.push_back(get_unistroke("x", x));
 
 	std::vector<Point> rectangle(begin(rectangle_arr), end(rectangle_arr));
 	Unistrokes.push_back(get_unistroke("rectangle", rectangle));
+
+	std::vector<Point> circle(begin(circle_arr), end(circle_arr));
+	Unistrokes.push_back(get_unistroke("circle", circle));
+
+	std::vector<Point> check(begin(check_arr), end(check_arr));
+	Unistrokes.push_back(get_unistroke("check", check));
+
+	std::vector<Point> caret(begin(caret_arr), end(caret_arr));
+	Unistrokes.push_back(get_unistroke("caret", caret));
+
+	std::vector<Point> zigzag(begin(zigzag_arr), end(zigzag_arr));
+	Unistrokes.push_back(get_unistroke("zigzag", zigzag));
+
+	std::vector<Point> arrow(begin(arrow_arr), end(arrow_arr));
+	Unistrokes.push_back(get_unistroke("arrow", arrow));
+
+	std::vector<Point> left_square_bracket(begin(left_square_bracket_arr), end(left_square_bracket_arr));
+	Unistrokes.push_back(get_unistroke("left_square_bracket", left_square_bracket));
+
+	std::vector<Point> right_square_bracket(begin(right_square_bracket_arr), end(right_square_bracket_arr));
+	Unistrokes.push_back(get_unistroke("right_square_bracket", right_square_bracket));
+
+	std::vector<Point> v(begin(v_arr), end(v_arr));
+	Unistrokes.push_back(get_unistroke("v", v));
+
+	std::vector<Point> _delete(begin(delete_arr), end(delete_arr));
+	Unistrokes.push_back(get_unistroke("delete", _delete));
+
+	std::vector<Point> left_curly_brace(begin(left_curly_brace_arr), end(left_curly_brace_arr));
+	Unistrokes.push_back(get_unistroke("left_curly_brace", left_curly_brace));
+
+	std::vector<Point> right_curly_brace(begin(right_curly_brace_arr), end(right_curly_brace_arr));
+	Unistrokes.push_back(get_unistroke("right_curly_brace", right_curly_brace));
+
+	std::vector<Point> star(begin(star_arr), end(star_arr));
+	Unistrokes.push_back(get_unistroke("star", star));
+
+	std::vector<Point> pigtail(begin(pigtail_arr), end(pigtail_arr));
+	Unistrokes.push_back(get_unistroke("pigtail", pigtail));
+
 }
