@@ -22,6 +22,8 @@
 #define _ONEIROI_H
 
 #include <vector>
+
+
 #include <cmath>
 #include <string>
 #include <cfloat>
@@ -41,7 +43,6 @@ struct Rectangle {
 struct Unistroke {
 	std::string        Name;
 	std::vector<Point> Points;
-	unsigned           radians;
 };
 
 struct Result {
@@ -49,7 +50,7 @@ struct Result {
 	float       Score;
 };
 
-#define Deg2Rad(d) ((d * PI) / 180.0f)
+#define Deg2Rad(d) ((d * M_PI) / 180.0f)
 
 #define NumUnistrokes     16
 #define NumPoints         64
@@ -68,6 +69,9 @@ extern std::vector<Point> ScaleTo_newpoints;
 extern std::vector<Point> TranslateTo_newpoints;
 
 extern std::vector<Unistroke> Unistrokes;
+
+Unistroke           get_unistroke(std::string, std::vector<Point>&);
+void                init_unistrokes(void);
 
 Result              Recognize(std::vector<Point>&);
 

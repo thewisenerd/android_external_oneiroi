@@ -3,7 +3,9 @@ LOCAL_PATH := $(call my-dir)
 oneiroi_src_files := \
 	main.cpp \
 	oneiroi.cpp \
-	helpers.cpp
+	helpers.cpp \
+	dollar.cpp \
+	unistroke.cpp
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := oneiroi

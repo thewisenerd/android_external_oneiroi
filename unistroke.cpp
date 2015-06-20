@@ -20,3 +20,29 @@
 
 #include <oneiroi.h>
 
+template <typename T, size_t N>
+T* begin(T(&arr)[N]) { return &arr[0]; }
+template <typename T, size_t N>
+T* end(T(&arr)[N]) { return &arr[0]+N; }
+
+Unistroke get_unistroke(std::string name, std::vector<Point>& points)
+{
+	Unistroke ret;
+	ret.Name = name;
+	ret.Points = Resample(points, NumPoints);
+	float radians = IndicativeAngle(ret.Points);
+	ret.Points = RotateBy(ret.Points, -radians);
+	ret.Points = ScaleTo(ret.Points, SquareSize);
+	ret.Points = TranslateTo(ret.Points, Origin);
+	return ret;
+}
+
+void init_unistrokes(void)
+{
+#include <gestures.h>
+	std::vector<Point> circle(begin(circle_arr), end(circle_arr));
+	Unistrokes.push_back(get_unistroke("circle", circle));
+
+	std::vector<Point> rectangle(begin(rectangle_arr), end(rectangle_arr));
+	Unistrokes.push_back(get_unistroke("rectangle", rectangle));
+}

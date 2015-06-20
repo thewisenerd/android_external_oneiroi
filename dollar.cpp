@@ -21,5 +21,36 @@
 #include <oneiroi.h>
 
 Result Recognize(std::vector<Point>& points) {
+	Result ret;
+	float radians;
+	float b, u, d;
+	unsigned i;
 
+	points  = Resample(points, NumPoints);
+	radians = IndicativeAngle(points);
+	points  = RotateBy(points, -radians);
+	points  = ScaleTo(points, SquareSize);
+	points  = TranslateTo(points, Origin);
+
+	b = FLT_MAX;
+	u = -1;
+	for (i = 0; i < Unistrokes.size(); i++) // for each unistroke
+	{
+		// Golden Section Search (original $1)
+		d = DistanceAtBestAngle(points, Unistrokes[i].Points, -AngleRange, +AngleRange, AnglePrecision);
+		if (d < b) {
+			b = d; // best (least) distance
+			u = i; // unistroke
+		}
+	}
+
+	if (u == -1) {
+		ret.Name  = "No match.";
+		ret.Score = 0.0;
+	} else {
+		ret.Name  = Unistrokes[u].Name;
+		ret.Score = 1.0 - b / HalfDiagonal;
+	}
+
+	return ret;
 }

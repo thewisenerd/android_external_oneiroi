@@ -119,7 +119,15 @@ int oneiroi_init(int argc, char **argv) {
 			printf("%s: touch %03d: %i, %i\n", __func__, i, x, y);
 	} // for
 
-	ret =
+	/* initialize unistrokes */
+	init_unistrokes();
+
+	ret = Recognize(Points);
+
+	if (debug) {
+		std::cout << ret.Name << std::endl;
+		std::cout << ret.Score << std::endl;
+	}
 
 	return 0;
 }
