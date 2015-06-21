@@ -48,9 +48,11 @@ int init_unistrokes(void)
 	std::vector<Point> Points;
 
 	std::string name;
+	std::string linebuf;
+	std::string tmp_coord;
 	unsigned id;
-	unsigned i;
-	int linebuf;
+	std::string::size_type i = -1, j = -1;;
+	//unsigned i, j, k, l;
 	int qx = 0, qy = 0;
 
 	fp = fopen(NYX_GESTURES_FILE, "r");
@@ -60,6 +62,9 @@ int init_unistrokes(void)
 	}
 
 	while ((read = getline(&line, &len, fp)) != -1) {
+		if (read == 1) {
+			continue;
+		}
 		switch(++count) {
 			case 1:
 				// name
@@ -72,27 +77,24 @@ int init_unistrokes(void)
 				break;
 			case 3:
 				// line
-				/* idk what we're playin with here, memallocs(?) but lets play! */
-				line[strlen(line) - 1] = ',';
-				line[strlen(line)]     = ' ';
-				line[strlen(line) + 1] = '\0';
-				/* stahp playing now :P */
-				linebuf = strlen("{000,000}, ");
-				for (i = 0; i < (strlen(line) / linebuf); i++) {
-					sscanf(line+(i * linebuf), "{%03d,%03d}, ", &qx, &qy);
+				linebuf.assign(line, (line+read - 1));
+
+				i = -1;
+				j = -1;
+
+
+				while (
+				std::string::npos != (i = linebuf.find("{", i+1)) &&
+				std::string::npos != (j = linebuf.find("}", j+1))
+				) {
+					tmp_coord = linebuf.substr(i+1, ((j - i) - 1));
+					qx = atof(tmp_coord.substr(0, tmp_coord.find(",")).c_str());
+					qy = atof(tmp_coord.substr(tmp_coord.find(",")+1).c_str());
 					Points.push_back({qx, qy});
-					//line = line + strlen("{000,000}, ");
-					//std::cout << qx << ", " << qy << std::endl;
 				}
-				/*
-				std::cout << line << std::endl;
-				std::cout << name << std::endl;
-				std::cout << id << std::endl;
-				*/
+
 				Unistrokes.push_back(get_unistroke(name, id, Points));
 				Points.clear();
-				break;
-			case 4:
 				count = 0;
 				break;
 			default:

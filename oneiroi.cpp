@@ -45,8 +45,20 @@ int oneiroi_init(int argc, char **argv) {
 	int debug = 2;
 	unsigned nyx_count = 0;
 	Result res;
+	std::string action;
 
 	printf("%s: oneiroi!\n", __func__);
+
+	if (argc < 2) {
+		std::cerr << "Usage: " << argv[0] << " --detect|--set" << std::endl;
+		return 1;
+	}
+	action.assign(argv[1]+2, strlen(argv[1])-2);
+
+	if (!((action == "set") || (action == "detect"))) {
+		std::cerr << "Usage: " << argv[0] << " --detect|--set" << std::endl;
+		return 1;
+	}
 
 	ifp = fopen(NYX_FILE, "r");
 	if (ifp == NULL) {
@@ -120,11 +132,16 @@ int oneiroi_init(int argc, char **argv) {
 		return -1;
 	}
 
-	res = Recognize(Points);
+	if (action == "detect") {
+		res = Recognize(Points);
 
-	if (debug) {
-		std::cout << res.Name << std::endl;
-		std::cout << res.Score << std::endl;
+		if (debug) {
+			std::cout << res.Name << std::endl;
+			std::cout << res.Score << std::endl;
+		}
+
+	} else if (action == "set") {
+		std::cout << "todo: set" << std::endl;
 	}
 
 	return 0;
