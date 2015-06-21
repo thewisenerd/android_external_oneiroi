@@ -22,8 +22,6 @@
 #define _ONEIROI_H
 
 #include <vector>
-
-
 #include <cmath>
 #include <string>
 #include <cfloat>
@@ -42,6 +40,7 @@ struct Rectangle {
 
 struct Unistroke {
 	std::string        Name;
+	unsigned           Id;
 	std::vector<Point> Points;
 };
 
@@ -71,7 +70,7 @@ extern std::vector<Point> TranslateTo_newpoints;
 extern std::vector<Unistroke> Unistrokes;
 
 Unistroke           get_unistroke(std::string, std::vector<Point>&);
-void                init_unistrokes(void);
+int                 init_unistrokes(void);
 
 Result              Recognize(std::vector<Point>&);
 
@@ -87,5 +86,12 @@ Rectangle           BoundingBox(std::vector<Point>&);
 float               PathDistance(std::vector<Point>&, std::vector<Point>&);
 float               PathLength(std::vector<Point>&);
 float               Distance(Point, Point);
+
+#define NYX_FILE               "/sys/nyx/nyx_data"
+#define NYX_LOG_FILE           "/data/local/tmp/nyx_log"
+#define NYX_GESTURES_FILE      "/data/local/tmp/gestures.txt"
+#define NYX_SIZEOF_HEADER_BUF  2
+#define NYX_SIZEOF_COORD       3
+#define NYX_SIZEOF_CHARBUF     512
 
 #endif // _ONEIROI_H

@@ -21,16 +21,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
-
 #include <iostream>
 
 #include <oneiroi.h>
-
-#define NYX_FILE               "/sys/nyx/nyx_data"
-#define NYX_LOG                "/data/local/tmp/nyx_log"
-#define NYX_SIZEOF_HEADER_BUF  2
-#define NYX_SIZEOF_COORD       3
-#define NYX_SIZEOF_CHARBUF     512
 
 Point Origin = {0.0f, 0.0f};
 std::vector<Point> Resample_newpoints;
@@ -41,6 +34,7 @@ std::vector<Point> TranslateTo_newpoints;
 std::vector<Unistroke> Unistrokes;
 
 int oneiroi_init(int argc, char **argv) {
+	int rc;
 	char ch;
 	/* char charbuf[(NYX_SIZEOF_COORD * NYX_SIZEOF_CHARBUF)]; */
 	char charbuf[NYX_SIZEOF_COORD];
@@ -50,7 +44,7 @@ int oneiroi_init(int argc, char **argv) {
 	FILE *ifp;
 	int debug = 2;
 	unsigned nyx_count = 0;
-	Result ret;
+	Result res;
 
 	printf("%s: oneiroi!\n", __func__);
 
@@ -120,13 +114,17 @@ int oneiroi_init(int argc, char **argv) {
 	} // for
 
 	/* initialize unistrokes */
-	init_unistrokes();
+	rc = init_unistrokes();
+	if (rc) {
+		printf("%s: init_unistrokes failed with code: %d", __func__, rc);
+		return -1;
+	}
 
-	ret = Recognize(Points);
+	res = Recognize(Points);
 
 	if (debug) {
-		std::cout << ret.Name << std::endl;
-		std::cout << ret.Score << std::endl;
+		std::cout << res.Name << std::endl;
+		std::cout << res.Score << std::endl;
 	}
 
 	return 0;
